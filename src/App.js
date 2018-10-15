@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import Countdown from 'react-countdown-now';
 import './App.css';
 
 class App extends Component {
@@ -20,7 +21,7 @@ class App extends Component {
     // current time passed from the first commit to the last
     let secondsPassed = timestamps[0] - timestamps[timestamps.length - 1];
     // average time per commit
-    let averageCommitTime = secondsPassed / timestamps.length;
+    let averageCommitTime = Math.floor(secondsPassed / timestamps.length);
     // how many commits are left
     let commitsLeft = 2000 - timestamps.length;
     // end time according to average commit time and commits left
@@ -33,10 +34,19 @@ class App extends Component {
     });
   }
 
+  formatNumberLength(num, length) {
+    let r = '' + num;
+    while (r.length < length) {
+      r += '0';
+    }
+    return Number(r);
+  }
+
   render() {
     return (
       <div className="App">
         <h3>Hello!</h3>
+        <Countdown date={this.formatNumberLength(this.state.endTime, 13)} />
       </div>
     );
   }
