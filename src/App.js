@@ -6,7 +6,10 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      averageCommitTime: 0
+      averageCommitTime: 0,
+      lastCommit: 0,
+      commitsLeft: 0,
+      endTime: 0
     };
   }
   async componentDidMount() {
@@ -17,12 +20,17 @@ class App extends Component {
     // current time passed from the first commit to the last
     let secondsPassed = timestamps[0] - timestamps[timestamps.length - 1];
     // average time per commit
-    let avg = secondsPassed / timestamps.length;
+    let averageCommitTime = secondsPassed / timestamps.length;
     // how many commits are left
     let commitsLeft = 2000 - timestamps.length;
     // end time according to average commit time and commits left
-    let timeEnd = timestamps[0] + avg * commitsLeft;
-    console.log(timeEnd);
+    let endTime = timestamps[0] + averageCommitTime * commitsLeft;
+    this.setState({
+      commitsLeft,
+      averageCommitTime,
+      lastCommit: timestamps[0],
+      endTime
+    });
   }
 
   render() {
